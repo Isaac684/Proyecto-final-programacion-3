@@ -4,6 +4,12 @@
  */
 package asistenciaapp;
 
+import controladorasistencia.controladorEspecialidad;
+import controladorasistencia.controladorEstudiantes;
+import java.util.List;
+import modelos.TblEspecialidad;
+
+
 /**
  *
  * @author ulqui
@@ -15,6 +21,7 @@ public class FormEstudiante extends javax.swing.JFrame {
      */
     public FormEstudiante() {
         initComponents();
+         Cargarestudiantes();
         /*cboespecialidades.addItem("Ing. en Sistemas");
         cboespecialidades.addItem("Arquitectura");
         cboespecialidades.addItem("Ing. Civil");
@@ -36,14 +43,10 @@ public class FormEstudiante extends javax.swing.JFrame {
 
         cboespecialidades = new javax.swing.JComboBox<>();
         txtcarnet = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        txtid = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txtnombre = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        txtapellido = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         btnagregar = new javax.swing.JButton();
@@ -53,7 +56,6 @@ public class FormEstudiante extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Lista Estudiantes");
 
-        cboespecialidades.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cboespecialidades.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cboespecialidadesActionPerformed(evt);
@@ -66,14 +68,6 @@ public class FormEstudiante extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("ID");
-
-        txtid.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtidKeyTyped(evt);
-            }
-        });
-
         jLabel4.setText("Nombre");
 
         txtnombre.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -82,27 +76,19 @@ public class FormEstudiante extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setText("Apellido");
-
         jLabel6.setText("Carnet");
 
         jLabel7.setText("Especialidad");
 
-        txtapellido.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtapellidoKeyTyped(evt);
-            }
-        });
-
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "ID", "Nombre", "Apellido", "Carnet", "Especialidad"
+                "Nombre", "Carnet", "Especialidad"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -120,20 +106,12 @@ public class FormEstudiante extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(51, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 912, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtid)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtapellido, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jLabel4)
+                            .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtcarnet, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6))
@@ -153,20 +131,21 @@ public class FormEstudiante extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7))
-                .addGap(7, 7, 7)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7))
+                        .addGap(7, 7, 7))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cboespecialidades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtapellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtcarnet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnagregar)
                     .addComponent(btneliminar)
                     .addComponent(btnactualizar))
@@ -189,24 +168,22 @@ public class FormEstudiante extends javax.swing.JFrame {
         //else if ((c<'a' || c>'z') && !(c<'A' || c>'Z')) evt.consume();
     }//GEN-LAST:event_txtcarnetKeyTyped
 
-    private void txtidKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtidKeyTyped
-        // TODO add your handling code here:
-        char c= evt.getKeyChar();
-        if (c<'0' || c>'9') evt.consume();
-    }//GEN-LAST:event_txtidKeyTyped
-
     private void txtnombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnombreKeyTyped
         // TODO add your handling code here:
         char c= evt.getKeyChar();
         if ((c<'a' || c>'z') && (c<'A' || c>'Z')) evt.consume();
     }//GEN-LAST:event_txtnombreKeyTyped
 
-    private void txtapellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtapellidoKeyTyped
-        // TODO add your handling code here:
-        char c= evt.getKeyChar();
-        if ((c<'a' || c>'z') && (c<'A' || c>'Z')) evt.consume();
-    }//GEN-LAST:event_txtapellidoKeyTyped
-
+    
+     public void Cargarestudiantes(){
+        controladorEspecialidad controlador = new controladorEspecialidad();
+        List<TblEspecialidad> lista = controlador.getListEspecialidad();
+        
+       for (TblEspecialidad item : lista){
+            cboespecialidades.addItem(item.getNombrecarrera());
+        
+    }
+        }
     /**
      * @param args the command line arguments
      */
@@ -247,16 +224,12 @@ public class FormEstudiante extends javax.swing.JFrame {
     private javax.swing.JButton btnagregar;
     private javax.swing.JButton btneliminar;
     private javax.swing.JComboBox<String> cboespecialidades;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField txtapellido;
     private javax.swing.JTextField txtcarnet;
-    private javax.swing.JTextField txtid;
     private javax.swing.JTextField txtnombre;
     // End of variables declaration//GEN-END:variables
 }

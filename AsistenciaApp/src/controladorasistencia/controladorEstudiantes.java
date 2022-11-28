@@ -24,10 +24,23 @@ public class controladorEstudiantes {
     return conexion.getInstancia().getFabrica().createEntityManager();
     }
     
+      public void insertarEstudiantes(TblEstudiantes estu) {
+        entity.getTransaction().begin();
+        entity.persist(estu);
+        entity.getTransaction().commit();
+        entity.close();
+    }
     
     public List<TblEstudiantes> getListEstudiantes()
     {
     entity.getTransaction().begin();
     return entity.createQuery("SELECT P FROM TblEstudiantes P").getResultList();
     }
+     public TblEstudiantes getEstudiantes(int id){
+        entity.getTransaction().begin();
+        TblEstudiantes pro = entity.find(TblEstudiantes.class, id);
+        entity.close();
+        
+        return pro;
+}
 }
