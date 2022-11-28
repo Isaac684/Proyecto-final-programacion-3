@@ -8,6 +8,7 @@ import controladorasistencia.controladorEspecialidad;
 import controladorasistencia.controladorEstudiantes;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 import javax.swing.table.DefaultTableModel;
 import modelos.TblEspecialidad;
 import modelos.TblEstudiantes;
@@ -22,6 +23,7 @@ public class FormEstudiante extends javax.swing.JFrame {
     /**
      * Creates new form FormEstudiante
      */
+    public TblEspecialidad array[];
     public FormEstudiante() {
         initComponents();
          Cargarestudiantes();
@@ -91,10 +93,7 @@ public class FormEstudiante extends javax.swing.JFrame {
 
         tablaestu.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "Nombre", "Carnet", "Especialidad"
@@ -194,7 +193,10 @@ public class FormEstudiante extends javax.swing.JFrame {
          TblEstudiantes es = new TblEstudiantes();
         es.setNombreestudiante(txtnombre.getText());
         es.setCarnetestudiante(txtcarnet.getText());
-       es.setCodigocarrera((TblEspecialidad)cboespecialidades.getSelectedItem());
+        es.setCodigocarrera(array[cboespecialidades.getSelectedIndex()]);
+        cargardatosEstu();
+        
+//       es.setCodigocarrera((TblEspecialidad)cboespecialidades.getSelectedItem());
         
         
 //        productoInsert.setIdproveedor((TblProveedor)jCmbProveedor.getSelectedItem());
@@ -209,12 +211,14 @@ public class FormEstudiante extends javax.swing.JFrame {
 
     
      public void Cargarestudiantes(){
+         int i = 0;
         controladorEspecialidad controlador = new controladorEspecialidad();
         List<TblEspecialidad> lista = controlador.getListEspecialidad();
-        
+        array = new TblEspecialidad[lista.size()];
        for (TblEspecialidad item : lista){
             cboespecialidades.addItem(item.getNombrecarrera());
-        
+            array[i] = item;
+            i++;
     }
         }
      
