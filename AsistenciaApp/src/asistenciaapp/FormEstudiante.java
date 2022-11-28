@@ -4,6 +4,8 @@
  */
 package asistenciaapp;
 
+import com.sun.jdi.connect.spi.Connection;
+import conexion.conexion;
 import controladorasistencia.controladorEspecialidad;
 import controladorasistencia.controladorEstudiantes;
 import java.math.BigDecimal;
@@ -12,6 +14,7 @@ import java.util.Set;
 import javax.swing.table.DefaultTableModel;
 import modelos.TblEspecialidad;
 import modelos.TblEstudiantes;
+
 
 
 /**
@@ -24,6 +27,7 @@ public class FormEstudiante extends javax.swing.JFrame {
      * Creates new form FormEstudiante
      */
     public TblEspecialidad array[];
+    public DefaultTableModel mo;
     public FormEstudiante() {
         initComponents();
          Cargarestudiantes();
@@ -121,30 +125,29 @@ public class FormEstudiante extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(51, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(100, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 912, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
-                            .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(28, 28, 28)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtcarnet, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(35, 35, 35)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(cboespecialidades, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnagregar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btneliminar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnactualizar)))))
-                .addGap(55, 55, 55))
+                            .addComponent(cboespecialidades, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnagregar)
+                        .addGap(30, 30, 30)
+                        .addComponent(btneliminar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnactualizar)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,9 +167,9 @@ public class FormEstudiante extends javax.swing.JFrame {
                     .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cboespecialidades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtcarnet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnactualizar)
                     .addComponent(btnagregar)
-                    .addComponent(btneliminar)
-                    .addComponent(btnactualizar))
+                    .addComponent(btneliminar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(76, Short.MAX_VALUE))
@@ -208,9 +211,10 @@ public class FormEstudiante extends javax.swing.JFrame {
         
        controladorEstudiantes cr = new controladorEstudiantes();
         cr.insertarEstudiantes(es);
-        cargardatosEstu();
+        mo=cargardatosEstu();
         formAsistencia.cargardatos();
         formAsistencia.cargardatosEstu();
+        
         
     }//GEN-LAST:event_btnagregarActionPerformed
 
@@ -220,13 +224,16 @@ public class FormEstudiante extends javax.swing.JFrame {
 
     private void btnactualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnactualizarActionPerformed
         // TODO add your handling code here:
-        DefaultTableModel modelo= new DefaultTableModel();
-    modelo= (DefaultTableModel)tablaestu.getModel();
-    for(int i = tablaestu.getRowCount()-1; i >= 0; i--){
-        modelo.removeRow(i);
-    }
+//        DefaultTableModel modelo= new DefaultTableModel();
+//    modelo= (DefaultTableModel)tablaestu.getModel();
+//    for(int i = tablaestu.getRowCount()-1; i >= 0; i--){
+//        modelo.removeRow(i);
+//    }
     }//GEN-LAST:event_btnactualizarActionPerformed
 
+   
+  
+   
     
      public void Cargarestudiantes(){
          int i = 0;
@@ -241,7 +248,7 @@ public class FormEstudiante extends javax.swing.JFrame {
         }
      
      
-    public void cargardatosEstu(){
+    public DefaultTableModel cargardatosEstu(){
     
     DefaultTableModel modelo= new DefaultTableModel();
     modelo.addColumn("Nombre");
@@ -259,9 +266,10 @@ public class FormEstudiante extends javax.swing.JFrame {
         estudiantes[2] = itemes.getNombrecarrera();
         modelo.addRow(estudiantes);
     }
-    
+   
     tablaestu.setModel(modelo);
     
+    return modelo;
     }
     
     /**

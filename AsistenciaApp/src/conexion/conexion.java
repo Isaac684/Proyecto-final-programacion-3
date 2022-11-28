@@ -17,7 +17,7 @@ public class conexion {
     private static conexion instancia= new conexion();
     private EntityManagerFactory  fabrica;
     
-    private conexion()
+    public conexion()
     {
     fabrica= Persistence.createEntityManagerFactory("AsistenciaAppPU");
     }

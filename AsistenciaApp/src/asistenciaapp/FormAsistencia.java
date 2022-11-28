@@ -23,6 +23,8 @@ public class FormAsistencia extends javax.swing.JFrame {
     /**
      * Creates new form FormAsistencia
      */
+     public DefaultTableModel m;
+     FormEstudiante abrirFormEstudiante = new FormEstudiante();
     public FormAsistencia() {
         initComponents();
         cargardatos();
@@ -81,11 +83,6 @@ public class FormAsistencia extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(dtasistencia);
-        if (dtasistencia.getColumnModel().getColumnCount() > 0) {
-            dtasistencia.getColumnModel().getColumn(0).setMinWidth(30);
-            dtasistencia.getColumnModel().getColumn(0).setPreferredWidth(30);
-            dtasistencia.getColumnModel().getColumn(0).setMaxWidth(30);
-        }
 
         jLabel1.setText("Logo");
 
@@ -107,13 +104,6 @@ public class FormAsistencia extends javax.swing.JFrame {
             }
         });
         jScrollPane2.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(1);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(200);
-        }
 
         btnbuscar.setText("Buscar");
 
@@ -129,6 +119,9 @@ public class FormAsistencia extends javax.swing.JFrame {
         jLabel8.setText("Busqueda de estudiante");
 
         txtBusquedaEstudiante.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBusquedaEstudianteKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtBusquedaEstudianteKeyTyped(evt);
             }
@@ -179,6 +172,9 @@ public class FormAsistencia extends javax.swing.JFrame {
         jLabel9.setText("Busqueda de asistencia");
 
         txtBusquedaAsistencia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBusquedaAsistenciaKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtBusquedaAsistenciaKeyTyped(evt);
             }
@@ -309,9 +305,10 @@ public class FormAsistencia extends javax.swing.JFrame {
 
     private void txtagregarestudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtagregarestudianteActionPerformed
         // TODO add your handling code here:
-        FormEstudiante abrirFormEstudiante = new FormEstudiante();
+        
         abrirFormEstudiante.setVisible(true);
         abrirFormEstudiante.setLocationRelativeTo(null);
+        m=abrirFormEstudiante.mo;
     }//GEN-LAST:event_txtagregarestudianteActionPerformed
 
     private void txtBusquedaEstudianteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaEstudianteKeyTyped
@@ -334,6 +331,31 @@ public class FormAsistencia extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTable1MouseClicked
 
+    private void txtBusquedaEstudianteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaEstudianteKeyReleased
+       
+        buscar(txtBusquedaEstudiante.getText());
+        
+    }//GEN-LAST:event_txtBusquedaEstudianteKeyReleased
+
+    private void txtBusquedaAsistenciaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaAsistenciaKeyReleased
+        buscarasistencia(txtBusquedaAsistencia.getText());
+    }//GEN-LAST:event_txtBusquedaAsistenciaKeyReleased
+
+    
+     public void buscar(String nombres){
+    
+    controladorEstudiantes cr= new  controladorEstudiantes();
+    
+    cr.listar(jTable1, nombres);
+    
+    }
+      public void buscarasistencia(String carnet){
+    
+    controladorasistencia cr= new  controladorasistencia();
+    
+    cr.listarasistencia(dtasistencia, carnet);
+    
+    }
     
     
     public void cargardatos(){
@@ -388,7 +410,14 @@ public class FormAsistencia extends javax.swing.JFrame {
         modelo.addRow(estudi);
     }
     
-    jTable1.setModel(modelo);
+    if(m!= null){
+    
+    jTable1.setModel(m);
+    }else{
+    
+     jTable1.setModel(modelo);
+    }
+    
 
     }
     
