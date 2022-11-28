@@ -6,8 +6,11 @@ package asistenciaapp;
 
 import controladorasistencia.controladorEspecialidad;
 import controladorasistencia.controladorEstudiantes;
+import java.math.BigDecimal;
 import java.util.List;
+import javax.swing.table.DefaultTableModel;
 import modelos.TblEspecialidad;
+import modelos.TblEstudiantes;
 
 
 /**
@@ -22,6 +25,7 @@ public class FormEstudiante extends javax.swing.JFrame {
     public FormEstudiante() {
         initComponents();
          Cargarestudiantes();
+         cargardatosEstu();
         /*cboespecialidades.addItem("Ing. en Sistemas");
         cboespecialidades.addItem("Arquitectura");
         cboespecialidades.addItem("Ing. Civil");
@@ -48,7 +52,7 @@ public class FormEstudiante extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaestu = new javax.swing.JTable();
         btnagregar = new javax.swing.JButton();
         btneliminar = new javax.swing.JButton();
         btnactualizar = new javax.swing.JButton();
@@ -70,6 +74,11 @@ public class FormEstudiante extends javax.swing.JFrame {
 
         jLabel4.setText("Nombre");
 
+        txtnombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtnombreActionPerformed(evt);
+            }
+        });
         txtnombre.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtnombreKeyTyped(evt);
@@ -80,7 +89,7 @@ public class FormEstudiante extends javax.swing.JFrame {
 
         jLabel7.setText("Especialidad");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaestu.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -91,9 +100,14 @@ public class FormEstudiante extends javax.swing.JFrame {
                 "Nombre", "Carnet", "Especialidad"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaestu);
 
         btnagregar.setText("Agregar");
+        btnagregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnagregarActionPerformed(evt);
+            }
+        });
 
         btneliminar.setText("Eliminar");
 
@@ -170,9 +184,28 @@ public class FormEstudiante extends javax.swing.JFrame {
 
     private void txtnombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnombreKeyTyped
         // TODO add your handling code here:
-        char c= evt.getKeyChar();
-        if ((c<'a' || c>'z') && (c<'A' || c>'Z')) evt.consume();
+//        char c= evt.getKeyChar();
+//        if ((c<'a' || c>'z') && (c<'A' || c>'Z')) evt.consume();
     }//GEN-LAST:event_txtnombreKeyTyped
+
+    private void btnagregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnagregarActionPerformed
+     
+        
+         TblEstudiantes es = new TblEstudiantes();
+        es.setNombreestudiante(txtnombre.getText());
+        es.setCarnetestudiante(txtcarnet.getText());
+       es.setCodigocarrera((TblEspecialidad)cboespecialidades.getSelectedItem());
+        
+        
+//        productoInsert.setIdproveedor((TblProveedor)jCmbProveedor.getSelectedItem());
+        
+       controladorEstudiantes cr = new controladorEstudiantes();
+        cr.insertarEstudiantes(es);
+    }//GEN-LAST:event_btnagregarActionPerformed
+
+    private void txtnombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtnombreActionPerformed
 
     
      public void Cargarestudiantes(){
@@ -184,6 +217,24 @@ public class FormEstudiante extends javax.swing.JFrame {
         
     }
         }
+     
+     
+      public void cargardatosEstu(){
+    
+    DefaultTableModel modelo= new DefaultTableModel();
+    
+    modelo= (DefaultTableModel)tablaestu.getModel();
+    controladorEstudiantes ca=new controladorEstudiantes();
+    List<TblEstudiantes> list = ca.getListEstudiantes();
+    
+    for(TblEstudiantes item : list){
+        TblEspecialidad itemes = item.getCodigocarrera();
+        
+        modelo.addRow(new Object[]{item.getNombreestudiante(),item.getCarnetestudiante(),itemes.getNombrecarrera()});
+    }
+    tablaestu.setModel(modelo);
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -228,7 +279,7 @@ public class FormEstudiante extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tablaestu;
     private javax.swing.JTextField txtcarnet;
     private javax.swing.JTextField txtnombre;
     // End of variables declaration//GEN-END:variables

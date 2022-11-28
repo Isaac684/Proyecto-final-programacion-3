@@ -25,7 +25,7 @@ public class controladorEspecialidad {
     }
      
     
-        public void insertarProveedor(TblEspecialidad espe) {
+        public void insertarEspecialidad(TblEspecialidad espe) {
         EntityManager en = entityManager();
         en.getTransaction().begin();
         en.persist(espe);
