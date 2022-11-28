@@ -70,17 +70,9 @@ public class FormAsistencia extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Carnet", "Fecha", "Asistencia", "Dia "
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, true
-            };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
-        });
+        ));
         dtasistencia.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         dtasistencia.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         dtasistencia.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -104,19 +96,16 @@ public class FormAsistencia extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Carnet", "Nombre", "Carrera"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+            }
+        ));
+        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
             }
         });
-        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setResizable(false);
@@ -129,6 +118,11 @@ public class FormAsistencia extends javax.swing.JFrame {
         btnbuscar.setText("Buscar");
 
         btnactualizar.setText("Actualizar");
+        btnactualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnactualizarActionPerformed(evt);
+            }
+        });
 
         btneliminar.setText("Eliminar");
 
@@ -299,7 +293,7 @@ public class FormAsistencia extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         pack();
@@ -331,15 +325,31 @@ public class FormAsistencia extends javax.swing.JFrame {
         
     }//GEN-LAST:event_dtasistenciaMouseClicked
 
+    private void btnactualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnactualizarActionPerformed
+        // TODO add your handling code here:
+        cargardatosEstu();
+    }//GEN-LAST:event_btnactualizarActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable1MouseClicked
+
     
     
     public void cargardatos(){
     
     DefaultTableModel modelo= new DefaultTableModel();
+    
     SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-    modelo= (DefaultTableModel)dtasistencia.getModel();
+    modelo.addColumn("ID");
+    modelo.addColumn("Carnet");
+    modelo.addColumn("Fecha");
+    modelo.addColumn("Asistio");
+    modelo.addColumn("Dia");
+    dtasistencia.setModel(modelo);
     controladorasistencia ca=new controladorasistencia();
     List<TblAsistencia> list = ca.getListAsistencia();
+    String asistencia[] = new String[5];
     
     for(TblAsistencia item : list){
         String AsitioString;
@@ -352,28 +362,37 @@ public class FormAsistencia extends javax.swing.JFrame {
         } else {
             AsitioString = "No";
         }
-        modelo.addRow(new Object[]{item.getIdasistencia(),itemAsis.getCarnetestudiante(), 
-            fecha,AsitioString, item.getDiasemana()});
+        asistencia[0]= item.getIdasistencia().toString();
+        asistencia[1]= itemAsis.getCarnetestudiante();
+        asistencia[2]= fecha;
+        asistencia[3] = AsitioString;
+        asistencia[4] = item.getDiasemana();
+        modelo.addRow(asistencia);
     }
     dtasistencia.setModel(modelo);
     }
     public void cargardatosEstu(){
-    
     DefaultTableModel modelo= new DefaultTableModel();
-    
-    modelo= (DefaultTableModel)jTable1.getModel();
+    modelo.addColumn("Carnet");
+    modelo.addColumn("Nombre");
+    modelo.addColumn("Carrera");
+
     controladorEstudiantes ca=new controladorEstudiantes();
     List<TblEstudiantes> list = ca.getListEstudiantes();
-    
+    String estudi[] = new String[3];
     for(TblEstudiantes item : list){
         TblEspecialidad itemes = item.getCodigocarrera();
-        
-        modelo.addRow(new Object[]{item.getCarnetestudiante(), item.getNombreestudiante(), itemes.getNombrecarrera()});
+        estudi[0] = item.getCarnetestudiante();
+        estudi[1]= item.getNombreestudiante();
+        estudi[2] = itemes.getNombrecarrera();
+        modelo.addRow(estudi);
     }
+    
     jTable1.setModel(modelo);
+
     }
     
-    
+
     
     
     /**

@@ -96,7 +96,7 @@ public class FormEstudiante extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nombre", "Carnet", "Especialidad"
+
             }
         ));
         jScrollPane1.setViewportView(tablaestu);
@@ -111,6 +111,11 @@ public class FormEstudiante extends javax.swing.JFrame {
         btneliminar.setText("Eliminar");
 
         btnactualizar.setText("Actualizar");
+        btnactualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnactualizarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -189,12 +194,12 @@ public class FormEstudiante extends javax.swing.JFrame {
 
     private void btnagregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnagregarActionPerformed
      
-        
+        FormAsistencia formAsistencia = new FormAsistencia();
          TblEstudiantes es = new TblEstudiantes();
         es.setNombreestudiante(txtnombre.getText());
         es.setCarnetestudiante(txtcarnet.getText());
         es.setCodigocarrera(array[cboespecialidades.getSelectedIndex()]);
-        cargardatosEstu();
+        
         
 //       es.setCodigocarrera((TblEspecialidad)cboespecialidades.getSelectedItem());
         
@@ -203,11 +208,24 @@ public class FormEstudiante extends javax.swing.JFrame {
         
        controladorEstudiantes cr = new controladorEstudiantes();
         cr.insertarEstudiantes(es);
+        cargardatosEstu();
+        formAsistencia.cargardatos();
+        formAsistencia.cargardatosEstu();
+        
     }//GEN-LAST:event_btnagregarActionPerformed
 
     private void txtnombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtnombreActionPerformed
+
+    private void btnactualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnactualizarActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel modelo= new DefaultTableModel();
+    modelo= (DefaultTableModel)tablaestu.getModel();
+    for(int i = tablaestu.getRowCount()-1; i >= 0; i--){
+        modelo.removeRow(i);
+    }
+    }//GEN-LAST:event_btnactualizarActionPerformed
 
     
      public void Cargarestudiantes(){
@@ -223,20 +241,27 @@ public class FormEstudiante extends javax.swing.JFrame {
         }
      
      
-      public void cargardatosEstu(){
+    public void cargardatosEstu(){
     
     DefaultTableModel modelo= new DefaultTableModel();
-    
-    modelo= (DefaultTableModel)tablaestu.getModel();
+    modelo.addColumn("Nombre");
+    modelo.addColumn("Carnet");
+    modelo.addColumn("Carrera");
+    tablaestu.setModel(modelo);
     controladorEstudiantes ca=new controladorEstudiantes();
     List<TblEstudiantes> list = ca.getListEstudiantes();
+    String estudiantes[] = new String[3];
     
     for(TblEstudiantes item : list){
         TblEspecialidad itemes = item.getCodigocarrera();
-        
-        modelo.addRow(new Object[]{item.getNombreestudiante(),item.getCarnetestudiante(),itemes.getNombrecarrera()});
+        estudiantes[0] = item.getNombreestudiante();
+        estudiantes[1] = item.getCarnetestudiante();
+        estudiantes[2] = itemes.getNombrecarrera();
+        modelo.addRow(estudiantes);
     }
+    
     tablaestu.setModel(modelo);
+    
     }
     
     /**
