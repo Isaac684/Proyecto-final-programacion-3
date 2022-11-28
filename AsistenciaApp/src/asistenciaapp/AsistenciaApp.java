@@ -11,9 +11,9 @@ public class AsistenciaApp {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        FormAsistencia formini = new FormAsistencia();
-        formini.setVisible(true);
-        formini.setLocationRelativeTo(null);
+        FormAsistencia form = new FormAsistencia();
+        form.setVisible(true);
+        form.setLocationRelativeTo(null);
     }
     
 }
