@@ -17,7 +17,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author angel
+ * @author Aizaac
  */
 @Entity
 @Table(name = "tbl_especialidad", catalog = "bd_proyecto", schema = "public")

@@ -39,11 +39,11 @@ public class controladorasistencia
      public void listarasistencia(JTable tabla, String carnet){
      
          DefaultTableModel model;
-         String []columnas={"ID","Carnet","Fecha","Asistio","Dia"};
+         String []columnas={"ID","Carnet","Fecha","Asistio","Dia","Evento"};
          model= new DefaultTableModel(null,columnas);
          
          List<TblAsistencia> dt= buscarAsistencia(carnet);
-         String [] datos= new String[5];
+         String [] datos= new String[6];
          for(TblAsistencia te: dt){
         TblEstudiantes it= te.getCarnetestudiante();
         datos[0]= te.getIdasistencia()+""; 
@@ -51,6 +51,7 @@ public class controladorasistencia
         datos[2]= te.getFechaasistencia()+"";
         datos[3]=te.getAsistio()+"";
         datos[4]=te.getDiasemana()+"";
+        datos[5] = te.getEvento()+"";
          
          model.addRow(datos);
          

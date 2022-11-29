@@ -22,7 +22,7 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author angel
+ * @author Aizaac
  */
 @Entity
 @Table(name = "tbl_asistencia", catalog = "bd_proyecto", schema = "public")
@@ -43,6 +43,8 @@ public class TblAsistencia implements Serializable {
     private Boolean asistio;
     @Column(name = "diasemana", length = 10)
     private String diasemana;
+    @Column(name = "Evento", length = 10)
+    private String evento;
     @JoinColumn(name = "carnetestudiante", referencedColumnName = "carnetestudiante")
     @ManyToOne
     private TblEstudiantes carnetestudiante;
@@ -84,6 +86,14 @@ public class TblAsistencia implements Serializable {
 
     public void setDiasemana(String diasemana) {
         this.diasemana = diasemana;
+    }
+
+    public String getEvento() {
+        return evento;
+    }
+
+    public void setEvento(String evento) {
+        this.evento = evento;
     }
 
     public TblEstudiantes getCarnetestudiante() {
