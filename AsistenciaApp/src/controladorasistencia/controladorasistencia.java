@@ -67,5 +67,12 @@ public class controladorasistencia
         
      return lista;
      }
+     
+     public void insertarAsistencia(TblAsistencia asis){
+         entity.getTransaction().begin();
+        entity.persist(asis);
+        entity.getTransaction().commit();
+        entity.close();
+     }
     
 }

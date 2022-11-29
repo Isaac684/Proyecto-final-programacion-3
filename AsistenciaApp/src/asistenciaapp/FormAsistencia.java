@@ -7,8 +7,13 @@ package asistenciaapp;
 import controladorasistencia.controladorEstudiantes;
 import controladorasistencia.controladorasistencia;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelos.TblAsistencia;
 import modelos.TblEspecialidad;
@@ -23,10 +28,16 @@ public class FormAsistencia extends javax.swing.JFrame {
     /**
      * Creates new form FormAsistencia
      */
+    public TblEstudiantes ais2[];
      public DefaultTableModel m;
      FormEstudiante abrirFormEstudiante = new FormEstudiante();
+     public Date fecha = new Date();
+     public String carnet;
+     public int id;
+     public DefaultTableModel modelosP;
     public FormAsistencia() {
         initComponents();
+        txtFecha.setText("Fecha: "+ new SimpleDateFormat("dd-MM-yyyy").format(fecha));
         cargardatos();
         cargardatosEstu();
     }
@@ -187,6 +198,11 @@ public class FormAsistencia extends javax.swing.JFrame {
         jRadioAusente.setText("Ausente");
 
         btnGuardarAsistencia.setText("Guardar asistencia");
+        btnGuardarAsistencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarAsistenciaActionPerformed(evt);
+            }
+        });
 
         btnBuscarAsistencia.setText("Buscar");
         btnBuscarAsistencia.setMaximumSize(new java.awt.Dimension(124, 22));
@@ -200,7 +216,7 @@ public class FormAsistencia extends javax.swing.JFrame {
 
         jLabel10.setText("Dia que asistio");
 
-        txtFecha.setText("Fecha//////");
+        txtFecha.setText("Fecha");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -225,13 +241,14 @@ public class FormAsistencia extends javax.swing.JFrame {
                         .addComponent(jRadioAusente, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(46, 46, 46))))
+                                .addComponent(txtFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(52, 52, 52))))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -240,7 +257,7 @@ public class FormAsistencia extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(jLabel10))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtBusquedaAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtFecha))
@@ -329,6 +346,8 @@ public class FormAsistencia extends javax.swing.JFrame {
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
+        id = dtasistencia.getRowCount()-1;
+        carnet = jTable1.getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()).toString();  
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void txtBusquedaEstudianteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaEstudianteKeyReleased
@@ -341,14 +360,61 @@ public class FormAsistencia extends javax.swing.JFrame {
         buscarasistencia(txtBusquedaAsistencia.getText());
     }//GEN-LAST:event_txtBusquedaAsistenciaKeyReleased
 
+    private void btnGuardarAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarAsistenciaActionPerformed
+        // TODO add your handling code here:
+        boolean asistioa = true;
+        if(jButtonAsistio.isSelected()){
+            asistioa = true;
+        }else if(jRadioAusente.isSelected()){
+            asistioa = false;
+        }
+        TblAsistencia asis = new TblAsistencia();
+        asis.setIdasistencia(id);
+        
+        asis.setCarnetestudiante(ais2[jTable1.getSelectedRow()]);
+       
+        asis.setFechaasistencia(fecha);
+        asis.setAsistio(asistioa);
+        
+        Calendar calendario = Calendar.getInstance();
+        int dia  = calendario.get(Calendar.DAY_OF_WEEK);
+        asis.setDiasemana(diaSemana(dia));
+        controladorasistencia cn = new controladorasistencia();
+        cn.insertarAsistencia(asis);
+        cargardatos();
+    }//GEN-LAST:event_btnGuardarAsistenciaActionPerformed
+
     
      public void buscar(String nombres){
     
-    controladorEstudiantes cr= new  controladorEstudiantes();
-    
-    cr.listar(jTable1, nombres);
+         listar(nombres);
+        
+        
+        
     
     }
+          public void listar(String nombres){
+     
+         DefaultTableModel model;
+         controladorEstudiantes cn = new controladorEstudiantes();
+         String []columnas={"Carnet","Nombre","Especialidad"};
+         model= new DefaultTableModel(null,columnas);
+         
+         List<TblEstudiantes> dt= cn.buscarEstudiantes(nombres);
+         String [] datos= new String[3];
+         for(TblEstudiantes te: dt){
+         
+        TblEspecialidad itemes = te.getCodigocarrera();
+        datos[1]= te.getNombreestudiante()+""; 
+        datos[0]= te.getCarnetestudiante()+"";
+        datos[2]= itemes.getNombrecarrera()+"";
+         
+         model.addRow(datos);
+         
+         } 
+         
+         jTable1.setModel(model);
+     }
       public void buscarasistencia(String carnet){
     
     controladorasistencia cr= new  controladorasistencia();
@@ -395,18 +461,22 @@ public class FormAsistencia extends javax.swing.JFrame {
     }
     public void cargardatosEstu(){
     DefaultTableModel modelo= new DefaultTableModel();
+    int i = 0;
     modelo.addColumn("Carnet");
     modelo.addColumn("Nombre");
     modelo.addColumn("Carrera");
 
     controladorEstudiantes ca=new controladorEstudiantes();
     List<TblEstudiantes> list = ca.getListEstudiantes();
+    ais2 = new TblEstudiantes[list.size()];
     String estudi[] = new String[3];
     for(TblEstudiantes item : list){
         TblEspecialidad itemes = item.getCodigocarrera();
         estudi[0] = item.getCarnetestudiante();
         estudi[1]= item.getNombreestudiante();
         estudi[2] = itemes.getNombrecarrera();
+        ais2[i] = item;
+        i++;
         modelo.addRow(estudi);
     }
     
@@ -419,6 +489,24 @@ public class FormAsistencia extends javax.swing.JFrame {
     }
     
 
+    }
+    public String diaSemana(int dia){
+        if(dia == 5){
+           return "Jueves"; 
+        }else if(dia ==6){
+            return "Viernes"; 
+        }else if(dia==7){
+            return "Sabado"; 
+        }else if(dia == 1){
+            return "Domingo"; 
+        }else if(dia == 2){
+            return "Lunes"; 
+        }else if(dia == 3){
+            return "Martes"; 
+        }else if(dia == 4){
+            return "Miercoles"; 
+        }
+        return ""; 
     }
     
 

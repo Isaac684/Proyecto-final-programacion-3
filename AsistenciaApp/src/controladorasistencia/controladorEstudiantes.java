@@ -48,27 +48,7 @@ public class controladorEstudiantes {
         return pro;
 }
      
-     public void listar(JTable tabla, String nombres){
-     
-         DefaultTableModel model;
-         String []columnas={"Nombre","Carnet","Especialidad"};
-         model= new DefaultTableModel(null,columnas);
-         
-         List<TblEstudiantes> dt= buscarEstudiantes(nombres);
-         String [] datos= new String[3];
-         for(TblEstudiantes te: dt){
-         
-        TblEspecialidad itemes = te.getCodigocarrera();
-        datos[0]= te.getNombreestudiante()+""; 
-        datos[1]= te.getCarnetestudiante()+"";
-        datos[2]= itemes.getNombrecarrera()+"";
-         
-         model.addRow(datos);
-         
-         } 
-         
-         tabla.setModel(model);
-     }
+
      public List<TblEstudiantes> buscarEstudiantes(String nombres){
      TblEstudiantes es;
      EntityManager em= entityManager();
