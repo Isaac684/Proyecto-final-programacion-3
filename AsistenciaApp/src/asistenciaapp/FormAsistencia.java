@@ -35,6 +35,7 @@ public class FormAsistencia extends javax.swing.JFrame {
      public Date fecha = new Date();
      public String carnet;
      public int id;
+     public String buscarcarnet;
      public DefaultTableModel modelosP;
     public FormAsistencia() {
         initComponents();
@@ -96,7 +97,6 @@ public class FormAsistencia extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asistenciaapp/resources/imgs/Logo (1).png"))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("TABLA DE ASISTENCIAS - SEMANA DE SISTEMAS");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -136,6 +136,11 @@ public class FormAsistencia extends javax.swing.JFrame {
             }
         });
 
+        txtBusquedaEstudiante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBusquedaEstudianteActionPerformed(evt);
+            }
+        });
         txtBusquedaEstudiante.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtBusquedaEstudianteKeyReleased(evt);
@@ -351,6 +356,7 @@ public class FormAsistencia extends javax.swing.JFrame {
 
     private void txtBusquedaEstudianteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaEstudianteKeyReleased
 
+        
         buscar(txtBusquedaEstudiante.getText());
 
     }//GEN-LAST:event_txtBusquedaEstudianteKeyReleased
@@ -392,7 +398,10 @@ public class FormAsistencia extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBusquedaAsistenciaKeyTyped
 
     private void txtBusquedaAsistenciaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaAsistenciaKeyReleased
-        buscarasistencia(txtBusquedaAsistencia.getText());
+        
+      
+        
+        listarasistencia(txtBusquedaEstudiante.getText());
     }//GEN-LAST:event_txtBusquedaAsistenciaKeyReleased
 
     private void jRadioAusenteStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jRadioAusenteStateChanged
@@ -411,6 +420,8 @@ public class FormAsistencia extends javax.swing.JFrame {
 
     private void btneliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btneliminarActionPerformed
         // TODO add your handling code here:
+        
+        
         if (!"".equals(carnet)) {
             controladorEstudiantes cn = new controladorEstudiantes();
             cn.eliminarDato(carnet);
@@ -420,15 +431,20 @@ public class FormAsistencia extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btneliminarActionPerformed
 
+    private void txtBusquedaEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBusquedaEstudianteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBusquedaEstudianteActionPerformed
+
+    
+    //METODO PARA BUSCAR ESTUDIANTES
     
      public void buscar(String nombres){
     
          listar(nombres);
-        
-        
-        
-    
+         
     }
+     
+     //METODO PARA LISTAR ESTUDIANTES
           public void listar(String nombres){
      
          DefaultTableModel model;
@@ -451,15 +467,50 @@ public class FormAsistencia extends javax.swing.JFrame {
          
          jTable1.setModel(model);
      }
-      public void buscarasistencia(String carnet){
+          
+          
+          
+          //METODO PARA BUSCAR ASISTENCIA
+     
+          
+            public void listarasistencia(String busqueda){
+     
+         DefaultTableModel model;
+         controladorasistencia ca= new controladorasistencia();
+         String []columnas={"ID","Nombre","Carnet","Fecha","Asistio","Dia","Evento"};
+         model= new DefaultTableModel(null,columnas);
+         
+         List<TblAsistencia> dt= ca.buscarPorAsistencia(busqueda);
+         String [] datos= new String[7];
+         for(TblAsistencia te: dt){
+        TblEstudiantes it= te.getCarnetestudiante();
+        datos[0]= te.getIdasistencia()+""; 
+        datos[1]=it.getNombreestudiante()+"";
+        datos[2]= it.getCarnetestudiante()+"";
+        datos[3]= te.getFechaasistencia()+"";
+        datos[4]=te.getAsistio()+"";
+        datos[5]=te.getDiasemana()+"";
+        datos[6] = te.getEvento()+"";
+         
+         model.addRow(datos);
+         
+         } 
+         
+         dtasistencia.setModel(model);
+     }
+          
+          
+            public void buscarasitencia(String carnet){
+            
+           listarasistencia(carnet);
+            }
+          
+          
+          
+          
+          
     
-    controladorasistencia cr= new  controladorasistencia();
-    
-    cr.listarasistencia(dtasistencia, carnet);
-    
-    }
-    
-    
+    //METODO PARA CARGAR DATOS ESTUDIANTES
     public void cargardatos(){
     
     DefaultTableModel modelo= new DefaultTableModel();
@@ -497,6 +548,9 @@ public class FormAsistencia extends javax.swing.JFrame {
     }
     dtasistencia.setModel(modelo);
     }
+    
+    //METODO PARA CARGAR DATOS ESTUDIANTES
+    
     public void cargardatosEstu(){
     DefaultTableModel modelo= new DefaultTableModel();
     int i = 0;

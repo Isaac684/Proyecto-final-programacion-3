@@ -62,7 +62,6 @@ public class FormEstudiante extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaestu = new javax.swing.JTable();
         btnagregar = new javax.swing.JButton();
-        btneliminar = new javax.swing.JButton();
         btnactualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -119,13 +118,6 @@ public class FormEstudiante extends javax.swing.JFrame {
             }
         });
 
-        btneliminar.setText("Eliminar");
-        btneliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btneliminarActionPerformed(evt);
-            }
-        });
-
         btnactualizar.setText("Actualizar");
         btnactualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -139,9 +131,9 @@ public class FormEstudiante extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(100, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 912, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -155,9 +147,7 @@ public class FormEstudiante extends javax.swing.JFrame {
                             .addComponent(jLabel7))
                         .addGap(18, 18, 18)
                         .addComponent(btnagregar)
-                        .addGap(30, 30, 30)
-                        .addComponent(btneliminar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(btnactualizar)))
                 .addContainerGap())
         );
@@ -180,8 +170,7 @@ public class FormEstudiante extends javax.swing.JFrame {
                     .addComponent(cboespecialidades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtcarnet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnactualizar)
-                    .addComponent(btnagregar)
-                    .addComponent(btneliminar))
+                    .addComponent(btnagregar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(76, Short.MAX_VALUE))
@@ -239,17 +228,6 @@ public class FormEstudiante extends javax.swing.JFrame {
         cargardatosEstu();
     }//GEN-LAST:event_btnactualizarActionPerformed
 
-    private void btneliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btneliminarActionPerformed
-        // TODO add your handling code here:
-        if (!"".equals(carnet)) {
-            controladorEstudiantes cn = new controladorEstudiantes();
-            cn.eliminarDato(carnet);
-        }else
-        {
-            JOptionPane.showMessageDialog(null, "Seleccione una colummna");
-        }
-    }//GEN-LAST:event_btneliminarActionPerformed
-
     private void tablaestuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaestuMouseClicked
         // TODO add your handling code here:
         carnet = tablaestu.getValueAt(tablaestu.getSelectedRow(), tablaestu.getSelectedColumn()).toString();
@@ -257,7 +235,7 @@ public class FormEstudiante extends javax.swing.JFrame {
 
    
   
-   
+   //METODO PARA CARGAR ESPECIALIDADES EN  UN CBOX
     
      public void Cargarestudiantes(){
          int i = 0;
@@ -272,6 +250,7 @@ public class FormEstudiante extends javax.swing.JFrame {
         }
      
      
+     //METODO PARA CARGAR ESTUDIANTES
     public DefaultTableModel cargardatosEstu(){
     
     DefaultTableModel modelo= new DefaultTableModel();
@@ -334,7 +313,6 @@ public class FormEstudiante extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnactualizar;
     private javax.swing.JButton btnagregar;
-    private javax.swing.JButton btneliminar;
     private javax.swing.JComboBox<String> cboespecialidades;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;

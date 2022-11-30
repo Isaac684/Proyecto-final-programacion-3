@@ -29,6 +29,8 @@ public class controladorEstudiantes {
     return conexion.getInstancia().getFabrica().createEntityManager();
     }
     
+    
+    //METODO PARA INSERTAR DATOS
       public void insertarEstudiantes(TblEstudiantes estu) {
         entity.getTransaction().begin();
         entity.persist(estu);
@@ -36,6 +38,7 @@ public class controladorEstudiantes {
         entity.close();
     }
     
+      //CREAMOS LISTA PARA ESTUDIANTES
     public List<TblEstudiantes> getListEstudiantes()
     {
     entity.getTransaction().begin();
@@ -49,7 +52,7 @@ public class controladorEstudiantes {
         return pro;
 }
      
-
+//CREAMOS UNA LISTA PARA BUSCAR ESTUDIANTES
      public List<TblEstudiantes> buscarEstudiantes(String nombres){
      TblEstudiantes es;
      EntityManager em= entityManager();
@@ -60,10 +63,16 @@ public class controladorEstudiantes {
      return lista;
      }
      
+     
+     
+     //METODO PUBLICO PARA ELIMINAR UN ESTUDIANTE
      public void eliminarDato(String carnet)
      {
          if (carnet != null) {
-            EntityManager em = entityManager();
+          
+             try{
+             
+               EntityManager em = entityManager();
             em.getTransaction().begin();
             Query qy= em.createQuery("DELETE FROM TblEstudiantes p WHERE p.carnetestudiante = :carnet");
             qy.setParameter("carnet",carnet);
@@ -76,6 +85,12 @@ public class controladorEstudiantes {
             {
                JOptionPane.showMessageDialog(null, "Seleccione la columna correcta");
             }
+             
+             }catch(Exception e){
+             
+             JOptionPane.showMessageDialog(null, "No se puede eliminar ya que el estudiante esta registrado que asistio a un Evento");
+             
+             }
          }
-     }
+}
 }

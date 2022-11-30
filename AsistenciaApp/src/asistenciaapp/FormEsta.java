@@ -4,6 +4,17 @@
  */
 package asistenciaapp;
 
+import controladorasistencia.controladorEstudiantes;
+import controladorasistencia.controladorasistencia;
+import controladorasistencia.controladorlistado;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import modelos.TblAsistencia;
+import modelos.TblEspecialidad;
+import modelos.TblEstudiantes;
+
 /**
  *
  * @author Diego
@@ -15,6 +26,7 @@ public class FormEsta extends javax.swing.JFrame {
      */
     public FormEsta() {
         initComponents();
+        cargardatos();
     }
 
     /**
@@ -27,14 +39,14 @@ public class FormEsta extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        JtDatos = new javax.swing.JTable();
+        asi = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        JtDatos.setModel(new javax.swing.table.DefaultTableModel(
+        asi.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -42,11 +54,11 @@ public class FormEsta extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(JtDatos);
+        jScrollPane1.setViewportView(asi);
 
         jLabel1.setText("Asistencia ordenada por evento");
 
-        jLabel3.setText("Evento");
+        jLabel3.setText("Busqueda por Evento");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "Ponencia", "Taller" }));
         jComboBox1.addItemListener(new java.awt.event.ItemListener() {
@@ -62,30 +74,31 @@ public class FormEsta extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(211, 211, 211))
+                .addGap(205, 205, 205))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(101, 101, 101)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 711, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(361, 361, 361)
-                        .addComponent(jLabel1)))
-                .addContainerGap(138, Short.MAX_VALUE))
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(113, 113, 113)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 711, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(126, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         pack();
@@ -94,16 +107,97 @@ public class FormEsta extends javax.swing.JFrame {
     private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
         // TODO add your handling code here:
         String seleccion = "";
-        if(jComboBox1.getSelectedItem().toString() == "Ponencia"){
+//        controladorlistado cl= new controladorlistado();
+        if(jComboBox1.getSelectedItem().toString() == "Ponencia")
+        {
+             listarasistencia("Ponencia");
+             
+        }
+        else if(jComboBox1.getSelectedItem().toString() == "Taller")
+        {
+              listarasistencia("Taller");
+        }
+        else if(jComboBox1.getSelectedItem().toString() == "-")
+        {
             
-        }else if(jComboBox1.getSelectedItem().toString() == "Taller"){
-            
-        }else if(jComboBox1.getSelectedItem().toString() == "-"){
-            
+            cargardatos();
         }
         
     }//GEN-LAST:event_jComboBox1ItemStateChanged
 
+    
+     
+     public void listarasistencia( String seleccion){
+     
+         DefaultTableModel model;
+         String []columnas={"ID","Nombre","Carnet","Fecha","Asistio","Dia","Evento"};
+         model= new DefaultTableModel(null,columnas);
+         controladorlistado cl= new controladorlistado();
+         
+         List<TblAsistencia> dt= cl.buscarPorParametro(seleccion);
+         String [] datos= new String[7];
+         for(TblAsistencia te: dt){
+        TblEstudiantes it= te.getCarnetestudiante();
+        datos[0]= te.getIdasistencia()+""; 
+        datos[1]=it.getNombreestudiante()+"";
+        datos[2]= it.getCarnetestudiante()+"";
+        datos[3]= te.getFechaasistencia()+"";
+        datos[4]=te.getAsistio()+"";
+        datos[5]=te.getDiasemana()+"";
+        datos[6] = te.getEvento()+"";
+         
+         model.addRow(datos);
+         
+         } 
+         
+         asi.setModel(model);
+     }
+     
+     
+    
+    
+    
+    
+    
+     public void cargardatos(){
+    
+    DefaultTableModel modelo= new DefaultTableModel();
+    
+    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+    modelo.addColumn("ID");
+     modelo.addColumn("Nombre");
+    modelo.addColumn("Carnet");
+    modelo.addColumn("Fecha");
+    modelo.addColumn("Asistio");
+    modelo.addColumn("Dia");
+    modelo.addColumn("Evento");
+    asi.setModel(modelo);
+    controladorasistencia ca=new controladorasistencia();
+    List<TblAsistencia> list = ca.getListAsistencia();
+    String asistencia[] = new String[7];
+    
+    for(TblAsistencia item : list){
+        String AsitioString;
+        String fecha;
+        fecha = format.format(item.getFechaasistencia());
+        TblEstudiantes itemAsis = item.getCarnetestudiante();
+        TblEspecialidad itemes = itemAsis.getCodigocarrera();
+        if(item.getAsistio()){
+            AsitioString = "Si";
+        } else {
+            AsitioString = "No";
+        }
+        asistencia[0]= item.getIdasistencia().toString();
+        asistencia[1]=itemAsis.getNombreestudiante();
+        asistencia[2]= itemAsis.getCarnetestudiante();
+        asistencia[3]= fecha;
+        asistencia[4] = AsitioString;
+        asistencia[5] = item.getDiasemana();
+        asistencia[6] = item.getEvento();
+        modelo.addRow(asistencia);
+    }
+    asi.setModel(modelo);
+    }
     /**
      * @param args the command line arguments
      */
@@ -140,7 +234,7 @@ public class FormEsta extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable JtDatos;
+    private javax.swing.JTable asi;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
