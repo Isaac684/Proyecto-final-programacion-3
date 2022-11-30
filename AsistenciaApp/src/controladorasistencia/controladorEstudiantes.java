@@ -8,6 +8,7 @@ import conexion.conexion;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelos.TblAsistencia;
@@ -59,5 +60,22 @@ public class controladorEstudiantes {
      return lista;
      }
      
-     
+     public void eliminarDato(String carnet)
+     {
+         if (carnet != null) {
+            EntityManager em = entityManager();
+            em.getTransaction().begin();
+            Query qy= em.createQuery("DELETE FROM TblEstudiantes p WHERE p.carnetestudiante = :carnet");
+            qy.setParameter("carnet",carnet);
+            int rowsDeleted = qy.executeUpdate();
+            em.getTransaction().commit();
+            em.close();
+            if (rowsDeleted != 0) {
+               JOptionPane.showMessageDialog(null, "Se elimino el registro seleccionado");
+            }else
+            {
+               JOptionPane.showMessageDialog(null, "Seleccione la columna correcta");
+            }
+         }
+     }
 }

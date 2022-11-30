@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelos.TblAsistencia;
@@ -95,7 +96,7 @@ public class FormAsistencia extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asistenciaapp/resources/imgs/Logo (1).png"))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("TABLA DE ASISTENCIAS - SEMANA DE SISTEMAS");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -129,6 +130,11 @@ public class FormAsistencia extends javax.swing.JFrame {
         btneliminar.setText("Eliminar");
         btneliminar.setMaximumSize(new java.awt.Dimension(140, 55));
         btneliminar.setPreferredSize(new java.awt.Dimension(140, 55));
+        btneliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btneliminarActionPerformed(evt);
+            }
+        });
 
         txtBusquedaEstudiante.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -402,6 +408,17 @@ public class FormAsistencia extends javax.swing.JFrame {
             jcEvento.setEnabled(true);
         }
     }//GEN-LAST:event_jButtonAsistioStateChanged
+
+    private void btneliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btneliminarActionPerformed
+        // TODO add your handling code here:
+        if (!"".equals(carnet)) {
+            controladorEstudiantes cn = new controladorEstudiantes();
+            cn.eliminarDato(carnet);
+        }else
+        {
+            JOptionPane.showMessageDialog(null, "Seleccione una colummna");
+        }
+    }//GEN-LAST:event_btneliminarActionPerformed
 
     
      public void buscar(String nombres){

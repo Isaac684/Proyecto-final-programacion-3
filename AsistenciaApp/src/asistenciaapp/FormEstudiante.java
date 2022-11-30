@@ -11,6 +11,7 @@ import controladorasistencia.controladorEstudiantes;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelos.TblEspecialidad;
 import modelos.TblEstudiantes;
@@ -26,6 +27,7 @@ public class FormEstudiante extends javax.swing.JFrame {
     /**
      * Creates new form FormEstudiante
      */
+    public String carnet;
     public TblEspecialidad array[];
     public DefaultTableModel mo;
     public FormEstudiante() {
@@ -103,6 +105,11 @@ public class FormEstudiante extends javax.swing.JFrame {
 
             }
         ));
+        tablaestu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaestuMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablaestu);
 
         btnagregar.setText("Agregar");
@@ -113,6 +120,11 @@ public class FormEstudiante extends javax.swing.JFrame {
         });
 
         btneliminar.setText("Eliminar");
+        btneliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btneliminarActionPerformed(evt);
+            }
+        });
 
         btnactualizar.setText("Actualizar");
         btnactualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -224,12 +236,24 @@ public class FormEstudiante extends javax.swing.JFrame {
 
     private void btnactualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnactualizarActionPerformed
         // TODO add your handling code here:
-//        DefaultTableModel modelo= new DefaultTableModel();
-//    modelo= (DefaultTableModel)tablaestu.getModel();
-//    for(int i = tablaestu.getRowCount()-1; i >= 0; i--){
-//        modelo.removeRow(i);
-//    }
+        cargardatosEstu();
     }//GEN-LAST:event_btnactualizarActionPerformed
+
+    private void btneliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btneliminarActionPerformed
+        // TODO add your handling code here:
+        if (!"".equals(carnet)) {
+            controladorEstudiantes cn = new controladorEstudiantes();
+            cn.eliminarDato(carnet);
+        }else
+        {
+            JOptionPane.showMessageDialog(null, "Seleccione una colummna");
+        }
+    }//GEN-LAST:event_btneliminarActionPerformed
+
+    private void tablaestuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaestuMouseClicked
+        // TODO add your handling code here:
+        carnet = tablaestu.getValueAt(tablaestu.getSelectedRow(), tablaestu.getSelectedColumn()).toString();
+    }//GEN-LAST:event_tablaestuMouseClicked
 
    
   
