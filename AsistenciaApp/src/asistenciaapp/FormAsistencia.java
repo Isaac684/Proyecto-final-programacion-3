@@ -59,7 +59,6 @@ public class FormAsistencia extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
-        btnbuscar = new javax.swing.JButton();
         btnactualizar = new javax.swing.JButton();
         btneliminar = new javax.swing.JButton();
         txtBusquedaEstudiante = new javax.swing.JTextField();
@@ -69,7 +68,6 @@ public class FormAsistencia extends javax.swing.JFrame {
         jButtonAsistio = new javax.swing.JRadioButton();
         jRadioAusente = new javax.swing.JRadioButton();
         btnGuardarAsistencia = new javax.swing.JToggleButton();
-        btnBuscarAsistencia = new javax.swing.JToggleButton();
         txtFecha = new javax.swing.JLabel();
         jcEvento = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
@@ -117,11 +115,6 @@ public class FormAsistencia extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jTable1);
 
-        btnbuscar.setFont(new java.awt.Font("Segoe UI Historic", 0, 14)); // NOI18N
-        btnbuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asistenciaapp/resources/imgs/iconmonstr-magnifier-lined-240.png"))); // NOI18N
-        btnbuscar.setText("Buscar");
-        btnbuscar.setPreferredSize(new java.awt.Dimension(140, 55));
-
         btnactualizar.setFont(new java.awt.Font("Segoe UI Emoji", 0, 14)); // NOI18N
         btnactualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asistenciaapp/resources/imgs/iconmonstr-restore-lined-240.png"))); // NOI18N
         btnactualizar.setText("Actualizar");
@@ -163,31 +156,25 @@ public class FormAsistencia extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(txtBusquedaEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtagregarestudiante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnactualizar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btneliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(113, 113, 113)
+                .addComponent(txtagregarestudiante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
+                .addGap(48, 48, 48)
+                .addComponent(txtBusquedaEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtBusquedaEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtagregarestudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnbuscar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnactualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btneliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+                    .addComponent(btnactualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btneliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtagregarestudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         txtBusquedaAsistencia.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -201,9 +188,19 @@ public class FormAsistencia extends javax.swing.JFrame {
 
         grupoSeleccion.add(jButtonAsistio);
         jButtonAsistio.setText("Asistio");
+        jButtonAsistio.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jButtonAsistioStateChanged(evt);
+            }
+        });
 
         grupoSeleccion.add(jRadioAusente);
         jRadioAusente.setText("Ausente");
+        jRadioAusente.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jRadioAusenteStateChanged(evt);
+            }
+        });
 
         btnGuardarAsistencia.setFont(new java.awt.Font("Segoe UI Emoji", 0, 14)); // NOI18N
         btnGuardarAsistencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asistenciaapp/resources/imgs/iconmonstr-window-plus-filled-240.png"))); // NOI18N
@@ -212,18 +209,6 @@ public class FormAsistencia extends javax.swing.JFrame {
         btnGuardarAsistencia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarAsistenciaActionPerformed(evt);
-            }
-        });
-
-        btnBuscarAsistencia.setFont(new java.awt.Font("Segoe UI Emoji", 0, 14)); // NOI18N
-        btnBuscarAsistencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/asistenciaapp/resources/imgs/iconmonstr-magnifier-lined-240.png"))); // NOI18N
-        btnBuscarAsistencia.setText("Buscar");
-        btnBuscarAsistencia.setMaximumSize(new java.awt.Dimension(124, 22));
-        btnBuscarAsistencia.setMinimumSize(new java.awt.Dimension(124, 22));
-        btnBuscarAsistencia.setPreferredSize(new java.awt.Dimension(140, 55));
-        btnBuscarAsistencia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarAsistenciaActionPerformed(evt);
             }
         });
 
@@ -238,12 +223,9 @@ public class FormAsistencia extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(btnGuardarAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnBuscarAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnGuardarAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtBusquedaAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(52, 52, 52)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jButtonAsistio)
@@ -268,7 +250,6 @@ public class FormAsistencia extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardarAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscarAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonAsistio)
                     .addComponent(jRadioAusente))
                 .addContainerGap())
@@ -324,23 +305,33 @@ public class FormAsistencia extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtBusquedaAsistenciaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaAsistenciaKeyTyped
+    private void dtasistenciaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dtasistenciaMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtBusquedaAsistenciaKeyTyped
+        
+    }//GEN-LAST:event_dtasistenciaMouseClicked
 
-    private void btnBuscarAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarAsistenciaActionPerformed
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnBuscarAsistenciaActionPerformed
+        id = dtasistencia.getRowCount()-1;
+        carnet = jTable1.getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()).toString();  
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        FormEsta esta = new FormEsta();
+        esta.setVisible(true);
+        esta.setLocationRelativeTo(null);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtagregarestudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtagregarestudianteActionPerformed
         // TODO add your handling code here:
-        
+
         abrirFormEstudiante.setVisible(true);
         abrirFormEstudiante.setLocationRelativeTo(null);
         m=abrirFormEstudiante.mo;
@@ -352,31 +343,16 @@ public class FormAsistencia extends javax.swing.JFrame {
         //if ((c<'a' || c>'z') && (c<'A' || c>'Z')) evt.consume();
     }//GEN-LAST:event_txtBusquedaEstudianteKeyTyped
 
-    private void dtasistenciaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dtasistenciaMouseClicked
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_dtasistenciaMouseClicked
+    private void txtBusquedaEstudianteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaEstudianteKeyReleased
+
+        buscar(txtBusquedaEstudiante.getText());
+
+    }//GEN-LAST:event_txtBusquedaEstudianteKeyReleased
 
     private void btnactualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnactualizarActionPerformed
         // TODO add your handling code here:
         cargardatosEstu();
     }//GEN-LAST:event_btnactualizarActionPerformed
-
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        // TODO add your handling code here:
-        id = dtasistencia.getRowCount()-1;
-        carnet = jTable1.getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()).toString();  
-    }//GEN-LAST:event_jTable1MouseClicked
-
-    private void txtBusquedaEstudianteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaEstudianteKeyReleased
-       
-        buscar(txtBusquedaEstudiante.getText());
-        
-    }//GEN-LAST:event_txtBusquedaEstudianteKeyReleased
-
-    private void txtBusquedaAsistenciaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaAsistenciaKeyReleased
-        buscarasistencia(txtBusquedaAsistencia.getText());
-    }//GEN-LAST:event_txtBusquedaAsistenciaKeyReleased
 
     private void btnGuardarAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarAsistenciaActionPerformed
         // TODO add your handling code here:
@@ -390,13 +366,13 @@ public class FormAsistencia extends javax.swing.JFrame {
         }
         TblAsistencia asis = new TblAsistencia();
         asis.setIdasistencia(id);
-        
+
         asis.setCarnetestudiante(ais2[jTable1.getSelectedRow()]);
-       
+
         asis.setFechaasistencia(fecha);
         asis.setAsistio(asistioa);
         asis.setEvento(jcEvento.getSelectedItem().toString());
-        
+
         Calendar calendario = Calendar.getInstance();
         int dia  = calendario.get(Calendar.DAY_OF_WEEK);
         asis.setDiasemana(diaSemana(dia));
@@ -405,12 +381,27 @@ public class FormAsistencia extends javax.swing.JFrame {
         cargardatos();
     }//GEN-LAST:event_btnGuardarAsistenciaActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void txtBusquedaAsistenciaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaAsistenciaKeyTyped
         // TODO add your handling code here:
-        FormEsta esta = new FormEsta();
-        esta.setVisible(true);
-        esta.setLocationRelativeTo(null);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_txtBusquedaAsistenciaKeyTyped
+
+    private void txtBusquedaAsistenciaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaAsistenciaKeyReleased
+        buscarasistencia(txtBusquedaAsistencia.getText());
+    }//GEN-LAST:event_txtBusquedaAsistenciaKeyReleased
+
+    private void jRadioAusenteStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jRadioAusenteStateChanged
+        // TODO add your handling code here:
+        if(jRadioAusente.isSelected()){
+            jcEvento.setEnabled(false);
+        }
+    }//GEN-LAST:event_jRadioAusenteStateChanged
+
+    private void jButtonAsistioStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jButtonAsistioStateChanged
+        // TODO add your handling code here:
+        if(jButtonAsistio.isSelected()){
+            jcEvento.setEnabled(true);
+        }
+    }//GEN-LAST:event_jButtonAsistioStateChanged
 
     
      public void buscar(String nombres){
@@ -578,10 +569,8 @@ public class FormAsistencia extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton btnBuscarAsistencia;
     private javax.swing.JToggleButton btnGuardarAsistencia;
     private javax.swing.JButton btnactualizar;
-    private javax.swing.JButton btnbuscar;
     private javax.swing.JButton btneliminar;
     private javax.swing.JTable dtasistencia;
     private javax.swing.ButtonGroup grupoSeleccion;
