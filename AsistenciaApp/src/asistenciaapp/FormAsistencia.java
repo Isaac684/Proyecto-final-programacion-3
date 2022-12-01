@@ -324,7 +324,7 @@ public class FormAsistencia extends javax.swing.JFrame {
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
-        id = dtasistencia.getRowCount()-1;
+        id = dtasistencia.getRowCount();
         carnet = jTable1.getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()).toString();  
     }//GEN-LAST:event_jTable1MouseClicked
 
